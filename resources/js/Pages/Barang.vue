@@ -21,7 +21,7 @@ function resetTimer() {
     clearTimeout(timer);
     timer = setTimeout(() => {
         router.post('/logout');
-    }, 10000); // 10 detik
+    }, 10000);
 }
 
 function setupListeners() {
@@ -69,6 +69,7 @@ onUnmounted(() => {
                                 <th class="text-black">Deskripsi</th>
                                 <th class="text-black">Harga</th>
                                 <th class="text-black">Stok</th>
+                                <th class="text-black">Kategori</th>
                                 <th class="text-black">Aksi</th>
                             </tr>
                         </thead>
@@ -79,6 +80,9 @@ onUnmounted(() => {
                                 <td class="text-black">{{ barang.deskripsi_produk }}</td>
                                 <td class="text-black">Rp {{ Number(barang.harga).toLocaleString('id-ID') }}</td>
                                 <td class="text-black">{{ barang.stok_barang }}</td>
+                                <td class="text-black">
+                                    {{ barang.kategori ? barang.kategori.nama_kategori : '-' }}
+                                </td>
                                 <td>
                                     <div class="flex gap-2">
                                         <button @click="router.get(`/edit/barang/${barang.id}/edit`)" class="btn btn-sm btn-warning">
@@ -91,7 +95,7 @@ onUnmounted(() => {
                                 </td>
                             </tr>
                             <tr v-if="!barangs || barangs.length === 0">
-                                <td colspan="6" class="text-center">Tidak ada data barang</td>
+                                <td colspan="7" class="text-center">Tidak ada data barang</td>
                             </tr>
                         </tbody>
                     </table>

@@ -10,6 +10,7 @@ import NumberInput from '@/Components/InputField/NumberInput.vue'
 
 const props = defineProps({
     barang: Object,
+    kategori: Array,
     user: Object,
 });
 
@@ -18,6 +19,7 @@ const form = reactive({
     deskripsi_produk: '',
     harga: '',
     stok_barang: '',
+    id_kategori: '',
 });
 
 const isLoading = ref(false);
@@ -28,6 +30,7 @@ onMounted(() => {
         form.deskripsi_produk = props.barang.deskripsi_produk || '';
         form.harga = props.barang.harga || '';
         form.stok_barang = props.barang.stok_barang || '';
+        form.id_kategori = props.barang.id_kategori || '';
     }
 });
 
@@ -59,10 +62,12 @@ function cancel() {
                         <Label text="Nama Barang" />
                         <TextInput v-model="form.nama_produk" placeholder="Masukkan nama barang" required />
                     </div>
+
                     <div>
                         <Label text="Deskripsi Barang" />
                         <TextArea v-model="form.deskripsi_produk" placeholder="Masukkan deskripsi barang" />
                     </div>
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <Label text="Harga Barang" />
@@ -73,6 +78,17 @@ function cancel() {
                             <NumberInput v-model="form.stok_barang" placeholder="Masukkan stok" required />
                         </div>
                     </div>
+
+                    <div>
+                        <Label text="Kategori" />
+                        <select v-model="form.id_kategori" class="w-full border rounded p-2">
+                            <option value="">-- Pilih Kategori --</option>
+                            <option v-for="k in kategori" :key="k.id_kategori" :value="k.id_kategori">
+                                {{ k.nama_kategori }}
+                            </option>
+                        </select>
+                    </div>
+
                     <div class="flex justify-end gap-2 mt-6">
                         <button type="button" @click="cancel" class="btn btn-outline" :disabled="isLoading">
                             Batal

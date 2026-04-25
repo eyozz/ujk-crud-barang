@@ -10,6 +10,7 @@ import NumberInput from '@/Components/InputField/NumberInput.vue'
 
 defineProps({
     user: Object,
+    kategori: Array,
 });
 
 const form = reactive({
@@ -17,6 +18,7 @@ const form = reactive({
     deskripsi_produk: '',
     harga: '',
     stok_barang: '',
+    id_kategori: '',
 });
 
 function submit() {
@@ -30,26 +32,43 @@ function submit() {
         <div class="p-6">
             <div class="bg-white rounded-xl shadow-md p-6">
                 <h1 class="text-2xl font-semibold text-gray-800 mb-6">Tambah Barang</h1>
+                
                 <form @submit.prevent="submit">
+
                     <div>
                         <Label text="Nama Barang" />
                         <TextInput v-model="form.nama_produk" placeholder="Masukkan nama barang" />
                     </div>
+
                     <div>
                         <Label text="Deskripsi Barang" />
                         <TextArea v-model="form.deskripsi_produk" placeholder="Masukkan deskripsi barang" />
                     </div>
+
                     <div>
                         <Label text="Harga Barang" />
                         <NumberInput v-model="form.harga" placeholder="Masukkan harga" />
                     </div>
+
                     <div>
                         <Label text="Stok Barang" />
                         <NumberInput v-model="form.stok_barang" placeholder="Masukkan stok" />
                     </div>
+
+                    <div>
+                        <Label text="Kategori" />
+                        <select v-model="form.id_kategori" class="w-full border rounded p-2">
+                            <option value="">-- Pilih Kategori --</option>
+                            <option v-for="k in kategori" :key="k.id_kategori" :value="k.id_kategori">
+                                {{ k.nama_kategori }}
+                            </option>
+                        </select>
+                    </div>
+
                     <div class="flex justify-end mt-4">
                         <ButtonSuccess type="submit">Tambah</ButtonSuccess>
                     </div>
+
                 </form>
             </div>
         </div>

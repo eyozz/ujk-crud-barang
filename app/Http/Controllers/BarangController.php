@@ -6,12 +6,14 @@ use Inertia\Inertia;
 use App\Models\Barang;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
+use App\Models\Kategori;
 
 class BarangController extends Controller
 {
     public function barang()
     {
-        $barang = Barang::all();
+        $barang = Barang::with('kategori')->get();
+
         return Inertia::render('Barang', [
             'barangs' => $barang,
             'user' => auth()->user(),
@@ -20,7 +22,11 @@ class BarangController extends Controller
 
     public function tambahbarang()
     {
-        return Inertia::render('Barang/TambahBarang');
+        $kategori = Kategori::all();
+
+        return Inertia::render('Barang/TambahBarang', [
+            'kategori' => $kategori
+        ]);
     }
 
     public function store(Request $request)
@@ -30,6 +36,7 @@ class BarangController extends Controller
             'deskripsi_produk' => 'required|string',
             'harga' => 'required|integer',
             'stok_barang' => 'required|integer',
+            'id_kategori' => 'nullable|integer',
         ]);
 
         Barang::create($validated);
@@ -38,9 +45,12 @@ class BarangController extends Controller
 
     public function editbarang($id)
     {
-        $barang = Barang::findOrFail($id);
+        $barang = Barang::with('kategori')->findOrFail($id);
+        $kategori = Kategori::all();
+
         return Inertia::render('Barang/EditBarang', [
-            'barang' => $barang
+            'barang' => $barang,
+            'kategori' => $kategori
         ]);
     }
 
@@ -51,6 +61,7 @@ class BarangController extends Controller
             'deskripsi_produk' => 'required|string',
             'harga' => 'required|integer',
             'stok_barang' => 'required|integer',
+            'id_kategori' => 'nullable|integer',
         ]);
 
         $barang->update($validated);
