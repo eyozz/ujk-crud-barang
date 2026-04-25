@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 24 Apr 2026 pada 16.06
+-- Waktu pembuatan: 25 Apr 2026 pada 04.56
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -34,15 +34,20 @@ CREATE TABLE `barangs` (
   `harga` int(11) NOT NULL,
   `stok_barang` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `id_kategori` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data untuk tabel `barangs`
 --
 
-INSERT INTO `barangs` (`id`, `nama_produk`, `deskripsi_produk`, `harga`, `stok_barang`, `created_at`, `updated_at`) VALUES
-(2, 'piring', 'piring plastik', 2000, 200, '2026-04-24 07:01:59', '2026-04-24 07:02:10');
+INSERT INTO `barangs` (`id`, `nama_produk`, `deskripsi_produk`, `harga`, `stok_barang`, `created_at`, `updated_at`, `id_kategori`) VALUES
+(2, 'piring', 'piring plastik', 2000, 200, '2026-04-24 07:01:59', '2026-04-24 19:42:13', 3),
+(3, 'gelas', 'gelas kaca', 1000, 11, '2026-04-24 07:38:29', '2026-04-24 19:42:19', 3),
+(4, 'Macbook', 'Laptop Macbook', 10000000, 5, '2026-04-24 19:33:05', '2026-04-24 19:33:05', 1),
+(5, 'Kursi Rotan', 'Kursi rotan elegant', 400000, 20, '2026-04-24 19:52:46', '2026-04-24 19:52:46', 2),
+(6, 'Keyboard', 'Keyboard hitam', 200000, 5, '2026-04-24 19:53:25', '2026-04-24 19:53:25', 1);
 
 -- --------------------------------------------------------
 
@@ -59,6 +64,26 @@ CREATE TABLE `failed_jobs` (
   `exception` longtext NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `kategori`
+--
+
+CREATE TABLE `kategori` (
+  `id_kategori` int(11) NOT NULL,
+  `nama_kategori` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `kategori`
+--
+
+INSERT INTO `kategori` (`id_kategori`, `nama_kategori`) VALUES
+(1, 'Elektronik'),
+(2, 'Furniture'),
+(3, 'Rumah Tangga');
 
 -- --------------------------------------------------------
 
@@ -133,7 +158,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `name`, `password`, `created_at`, `updated_at`) VALUES
-(1, 'cek@webdeveloper.id', 'cek', '$2y$12$jR0Nt65UgJptHnZxz.1PTe7PbLUUM3hwGW8WvN8i9ADFNhWvzi2Ym', '2026-04-24 06:47:53', '2026-04-24 06:47:53');
+(1, 'averoes.eyoz@gmail.com', 'Muhammed Averoes Mufti Wijaya', '$2y$12$jR0Nt65UgJptHnZxz.1PTe7PbLUUM3hwGW8WvN8i9ADFNhWvzi2Ym', '2026-04-24 06:47:53', '2026-04-24 06:47:53');
 
 --
 -- Indexes for dumped tables
@@ -151,6 +176,12 @@ ALTER TABLE `barangs`
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Indeks untuk tabel `kategori`
+--
+ALTER TABLE `kategori`
+  ADD PRIMARY KEY (`id_kategori`);
 
 --
 -- Indeks untuk tabel `migrations`
@@ -187,13 +218,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `barangs`
 --
 ALTER TABLE `barangs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `kategori`
+--
+ALTER TABLE `kategori`
+  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`
@@ -211,7 +248,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
